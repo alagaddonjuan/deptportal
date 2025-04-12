@@ -17,15 +17,15 @@ jobs:
         if: github.event_name == 'issues'
         uses: actions/add-to-project@v0.4.0
         with:
-          project-url: "https://github.com/alagaddonjuan/deptportal" # Replace with your project URL
+          project-url: "https://github.com/alagaddonjuan/deptportal/1" # Replace with your project URL
           github-token: ${{ secrets.GITHUB_TOKEN }}
           labeled: ""
           
       - name: Sync PR status
         if: github.event_name == 'pull_request'
-        uses: srggrs/auto-sync-project@v1.0.1
+        uses: srggrs/auto-sync-project@v0.4.0
         with:
-          project-url: "https://github.com/alagaddonjuan/deptportal"
+          project-url: "https://github.com/alagaddonjuan/deptportal/1"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           column-name: "In Review" # Moves PRs here when opened
           done-column: "Done" # Moves here when PR is merged

@@ -23,7 +23,7 @@ jobs:
           
       - name: Sync PR status
         if: github.event_name == 'pull_request'
-        uses: srggrs/auto-sync-project@v1.0.1
+        uses: srggrs/auto-sync-project@v0.4.0
         with:
           project-url: "https://github.com/alagaddonjuan/deptportal"
           github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -115,4 +115,9 @@ try {
     http_response_code(500);
     die(json_encode(['error' => 'Database error']));
 }
+
+// In login.php after successful authentication
+session_start();
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
 ?>

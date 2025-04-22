@@ -1,6 +1,6 @@
 name: Sync with Project Board
+
 on:
-  # Triggers
   issues:
     types: [opened, edited, labeled, assigned]
   pull_request:
@@ -13,11 +13,10 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - name: Add issues to project
-        if: github.event_name == 'issues'
+      - name: Add issue or PR to project
         uses: actions/add-to-project@v0.4.0
         with:
-          project-url: "https://github.com/alagaddonjuan/deptportal/1" # Replace with your project URL
+          project-url: "https://github.com/users/alagaddonjuan/projects/1" # Replace with your project URL
           github-token: ${{ secrets.GITHUB_TOKEN }}
           labeled: ""
           
@@ -25,8 +24,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: srggrs/auto-sync-project@v0.4.0
         with:
-          project-url: "https://github.com/alagaddonjuan/deptportal/1"
+          project-url: "https://github.com/users/alagaddonjuan/projects/1"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           column-name: "In Review" # Moves PRs here when opened
           done-column: "Done" # Moves here when PR is merged
-

@@ -16,5 +16,15 @@ jobs:
       - name: Add issue or PR to project
         uses: actions/add-to-project@v0.4.0
         with:
-          project-url: "https://github.com/users/alagaddonjuan/projects/1" # Correct format!
+          project-url: "https://github.com/users/alagaddonjuan/projects/1" # Replace with your project URL
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          labeled: ""
+          
+      - name: Sync PR status
+        if: github.event_name == 'pull_request'
+        uses: srggrs/auto-sync-project@v0.4.0
+        with:
+          project-url: "https://github.com/users/alagaddonjuan/projects/1"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          column-name: "In Review" # Moves PRs here when opened
+          done-column: "Done" # Moves here when PR is merged

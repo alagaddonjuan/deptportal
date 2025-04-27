@@ -4,7 +4,32 @@ require_once __DIR__ . '/../middleware/auth_check.php';
 require_once __DIR__ . '/../../includes/db_operations.php';
 
 header('Content-Type: application/json');
+// Before allowing enrollment
+function meetsPrerequisites($studentId, $courseId) {
+    global $conn;
+    
+    $stmt = $conn->prepare("
+        SELECT required_course_id
+        FROM prerequisites
+        WHERE course_id = ?
+    ");
+    $stmt->execute([$courseId]);
+    $required = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
+    if (empty($required)) return true;
+
+    $placeholders = rtrim(str_repeat('?,', count($required)), ',');
+    $stmt = $conn->prepare("
+        SELECT COUNT(*) 
+        FROM enrollments 
+        WHERE student_id = ? 
+        AND course_id IN ($placeholders)
+        AND grade IN ('A','B','C','D')
+    ");
+    $stmt->execute(array_merge([$studentId], $required));
+    
+    return $stmt->fetchColumn() == count($required);
+}
 class EnrollmentAPI extends DBOperations {
     public function enrollStudent() {
         $user_id = $_SESSION['user_id'] ?? null;

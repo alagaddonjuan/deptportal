@@ -6,30 +6,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('enrollment_id')
-                  ->constrained('enrollments')
-                  ->onDelete('cascade');
-            $table->foreignId('assessment_id')
-                  ->constrained('assessments')
-                  ->onDelete('cascade');
-            $table->decimal('marks_obtained', 8, 2)->unsigned()->nullable();
-            $table->string('grade_letter', 5)->nullable()->comment('e.g., A+, B, Pass');
-            $table->text('comments')->nullable();
-            $table->foreignId('graded_by_user_id')->nullable()
-                  ->constrained('users')
-                  ->onDelete('set null');
-            $table->date('grading_date')->nullable();
+            $table->foreignId('assessment_id')->constrained('assessments')->onDelete('cascade');
+            
+            // This is the correct, descriptive column name.
+            $table->foreignId('student_user_id')->constrained('users')->onDelete('cascade');
+
+            $table->decimal('marks_obtained', 5, 2);
+            $table->string('grade_letter')->nullable();
             $table->timestamps();
 
-            // Unique constraint: a student should have one grade entry per assessment in an enrollment
-            $table->unique(['enrollment_id', 'assessment_id']);
+            // Prevent a student from having two grades for the same assessment
+            $table->unique(['assessment_id', 'student_user_id']);
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('grades');

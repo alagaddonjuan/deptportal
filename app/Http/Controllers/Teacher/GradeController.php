@@ -9,10 +9,17 @@ use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class GradeController extends Controller
 {
+    /**
+     * Redirect to the grade creation flow, which is the main index action.
+     */
+    public function index()
+    {
+        return redirect()->route('teacher.grades.create');
+    }
+
     /**
      * Show the form for selecting a subject and assessment.
      */
@@ -38,8 +45,10 @@ class GradeController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        // Get students enrolled in the subject's course
         $students = User::whereHas('enrollments', function ($query) use ($assessment) {
-            $query->where('course_id', $assessment->subject->course_id);
+            $query->where('course_id', $assessment->subject->course_id)
+                  ->where('status', 'enrolled'); // Ensure only currently enrolled students are shown
         })->get();
         
         // Eager load existing grades to pre-fill the form if they exist
@@ -71,7 +80,7 @@ class GradeController extends Controller
 
             // Validate marks against the assessment's max_marks
             if ($marks > $assessment->max_marks) {
-                 return back()->with('error', "Marks for a student cannot exceed the maximum of {$assessment->max_marks}.");
+                 return back()->withInput()->with('error', "Marks for a student cannot exceed the maximum of {$assessment->max_marks}.");
             }
             
             Grade::updateOrCreate(

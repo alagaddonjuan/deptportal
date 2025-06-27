@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 class AttendanceController extends Controller
 {
     /**
+     * Redirect to the attendance creation flow, which is the main index action.
+     */
+    public function index()
+    {
+        return redirect()->route('teacher.attendance.create');
+    }
+
+    /**
      * Show the form for selecting a subject and date.
      */
     public function create()
@@ -63,8 +71,7 @@ class AttendanceController extends Controller
         foreach ($request->attendance as $studentId => $status) {
             Attendance::updateOrCreate(
                 [
-                    // CORRECTED: This now matches the database table
-                    'student_user_id' => $studentId, 
+                    'student_user_id' => $studentId,
                     'subject_id' => $request->subject_id,
                     'session_date' => $request->session_date,
                 ],

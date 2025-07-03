@@ -3,6 +3,8 @@
 namespace App\Providers;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View; // <-- Add this line
+use App\Models\SchoolSetting;      // <-- Add this line
 use Illuminate\Auth\Notifications\ResetPassword;
 use App\Models\Assessment;
 use App\Policies\AssessmentPolicy;
@@ -22,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        View::composer('*', function ($view) {
+            $settings = SchoolSetting::firstOrCreate(['id' => 1]);
+            $view->with('schoolSettings', $settings);
+        });
         Schema::defaultStringLength(191); //
         // Customize the password reset URL
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {

@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 md:p-8 text-gray-900">
                     
                     {{-- Display Validation Errors if any --}}
                     @if ($errors->any())
@@ -28,25 +28,25 @@
                             <!-- Name -->
                             <div>
                                 <label for="name" class="block font-medium text-sm text-gray-700">{{ __('Name') }}</label>
-                                <input id="name" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" type="text" name="name" value="{{ old('name') }}" required autofocus />
+                                <input id="name" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="text" name="name" value="{{ old('name') }}" required autofocus />
                             </div>
 
                             <!-- Email Address -->
                             <div>
                                 <label for="email" class="block font-medium text-sm text-gray-700">{{ __('Email') }}</label>
-                                <input id="email" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" type="email" name="email" value="{{ old('email') }}" required />
+                                <input id="email" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="email" name="email" value="{{ old('email') }}" required />
                             </div>
 
                             <!-- Password -->
                             <div>
                                 <label for="password" class="block font-medium text-sm text-gray-700">{{ __('Password') }}</label>
-                                <input id="password" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" type="password" name="password" required />
+                                <input id="password" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="password" name="password" required />
                             </div>
 
                             <!-- Confirm Password -->
                             <div>
                                 <label for="password_confirmation" class="block font-medium text-sm text-gray-700">{{ __('Confirm Password') }}</label>
-                                <input id="password_confirmation" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm" type="password" name="password_confirmation" required />
+                                <input id="password_confirmation" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="password" name="password_confirmation" required />
                             </div>
 
                             <!-- Role -->
@@ -72,7 +72,6 @@
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

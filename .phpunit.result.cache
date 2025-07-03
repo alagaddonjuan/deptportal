@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Tests\\Unit\\ExampleTest::test_that_true_is_true":0.574,"Tests\\Feature\\Admin\\CourseManagementTest::test_admin_can_create_a_course":6.023,"Tests\\Feature\\Admin\\CourseManagementTest::test_non_admin_cannot_create_a_course":0.113,"Tests\\Feature\\ExampleTest::test_the_application_returns_a_successful_response":1.98}}

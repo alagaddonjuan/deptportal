@@ -12,15 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class AttendanceController extends Controller
 {
     /**
-     * Redirect to the attendance creation flow, which is the main index action.
-     */
-    public function index()
-    {
-        return redirect()->route('teacher.attendance.create');
-    }
-
-    /**
-     * Show the form for selecting a subject and date.
+     * Show the form for selecting a subject and date to mark attendance.
      */
     public function create()
     {
@@ -46,8 +38,8 @@ class AttendanceController extends Controller
         }
 
         $students = User::whereHas('enrollments', function ($query) use ($subject) {
-            $query->where('course_id', $subject->course_id);
-        })->get();
+            $query->where('course_id', $subject->course_id)->where('status', 'enrolled');
+        })->orderBy('name')->get();
 
         return view('teacher.attendance.roster', [
             'students' => $students,
